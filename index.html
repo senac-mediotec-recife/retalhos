@@ -1,207 +1,294 @@
-/* Base Temática: Cyberpunk Sustentável */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEDIOTEC SENAC - 1º ANO E - P.I - DESAFIO 3 </title>
+<style>
+:root {
+  /* Nova Paleta Neutra + Dark Blue / Cyan Details */
+  --bg-dark: #05070a;
+  --bg-panel: #0d1117;
+  --border-blue: #162a45;
+  --neon-blue: #0066cc;
+  --neon-cyan: #00e5ff;
+  --text-main: #e6edf3;
+  --text-muted: #7d8590;
+  --shadow-blue: rgba(0, 102, 204, 0.25);
+}
+
+* { box-sizing: border-box; }
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 900px;
-    margin: auto;
-    padding: 30px;
-    background: #0b0c10;
-    color: #c5c6c7;
-    transition: opacity 0.5s ease;
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text-main);
+  font-family: "Courier New", Courier, monospace;
+  background: 
+    radial-gradient(circle at 50% 50%, #0a1324 0%, var(--bg-dark) 75%);
+  user-select: none;
+  padding: 24px;
 }
 
-h1, h2, h3 {
-    color: #45f3ff;
-    text-shadow: 0 0 10px rgba(69, 243, 255, 0.3);
+/* Efeito de Scanlines de Monitor CRT Traduzido para o Tema Dark Blue */
+body::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.4) 50%),
+    repeating-linear-gradient(45deg, rgba(0, 102, 204, 0.02) 0 2px, transparent 2px 4px);
+  z-index: 999;
+  opacity: 0.4;
+  pointer-events: none;
+  background-size: 100% 4px, 8px 8px;
 }
 
-/* Painel Superior de Status (Moedas e Progresso) */
-.hud-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #1f2833;
-    padding: 15px 25px;
-    border-radius: 10px;
-    margin-bottom: 25px;
-    border: 1px solid #45f3ff;
+button {
+  font: inherit;
+  color: inherit;
+  outline: none;
 }
 
-.hud-item {
-    font-size: 18px;
-    font-weight: bold;
-    color: #66fcf1;
+.shell {
+  width: min(1360px, 100%);
+  margin: 0 auto;
 }
 
-/* Barra de Progresso */
-.progress-bar-bg {
-    background: #0b0c10;
-    width: 150px;
-    height: 12px;
-    border-radius: 6px;
-    display: inline-block;
-    margin-left: 10px;
-    vertical-align: middle;
-    overflow: hidden;
-    border: 1px solid #333;
+/* NOVO LAYOUT: Terminal Assimétrico de Tela Cheia */
+.lil-dashboard {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  margin-top: 20px;
 }
 
-.progress-bar-fill {
-    background: linear-gradient(90deg, #45f3ff, #1f2833);
-    height: 100%;
-    width: 0%;
-    transition: width 0.5s ease-in-out;
+/* Barra Lateral de Diagnóstico Técnico */
+.lil-sidebar {
+  background: var(--bg-panel);
+  border: 2px solid var(--border-blue);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
 }
 
-/* Grid e Cards de NPCs */
-#npcList {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+.lil-sidebar::before {
+  content: "SYS_STATUS: ONLINE";
+  position: absolute;
+  bottom: 12px;
+  left: 20px;
+  font-size: 0.7rem;
+  color: var(--neon-cyan);
+  letter-spacing: 1px;
 }
 
-.npc-card {
-    padding: 25px;
-    border-radius: 12px;
-    text-align: center;
-    font-weight: bold;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+.system-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.npc-card.unlocked {
-    background: #1f2833;
-    border: 2px solid #45f3ff;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+.system-title span {
+  color: var(--neon-cyan);
+  font-size: 0.8rem;
+  border: 1px solid var(--neon-cyan);
+  padding: 2px 6px;
+  letter-spacing: 1px;
 }
 
-.npc-card.unlocked:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 20px rgba(69, 243, 255, 0.2);
+.sys-stat-box {
+  border-left: 2px solid var(--neon-blue);
+  padding-left: 12px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.sys-stat-box div { margin-bottom: 6px; }
+.sys-stat-box b { color: var(--text-main); }
+
+/* Bloco de Conteúdo Principal */
+.lil-main-console {
+  background: var(--bg-panel);
+  border: 2px solid var(--border-blue);
+  box-shadow: 0 12px 40px var(--shadow-blue);
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.npc-card.completed {
-    border-color: #22c55e;
+.console-header {
+  border-bottom: 1px solid var(--border-blue);
+  padding-bottom: 16px;
+  margin-bottom: 24px;
 }
 
-.npc-card.completed::after {
-    content: "✓ COMPLETO";
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 10px;
-    background: #22c55e;
-    color: black;
-    padding: 2px 6px;
-    border-radius: 4px;
+.console-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: var(--neon-cyan);
+  letter-spacing: 2px;
 }
 
-.npc-card.locked {
-    background: #11141a;
-    border: 2px dashed #444;
-    color: #555;
-    cursor: not-allowed;
+.console-manifesto {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-blue);
+  padding: 20px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #d1dbf0;
+  margin-bottom: 30px;
 }
 
-/* Caixa de Diálogo Typewriter */
-.dialogue-box {
-    background: #1f2833;
-    border-left: 5px solid #45f3ff;
-    padding: 20px;
-    margin: 20px 0;
-    font-size: 18px;
-    min-height: 50px;
-    line-height: 1.6;
-    border-radius: 0 10px 10px 0;
+/* ESTILIZAÇÃO DOS BOTÕES INDUSTRIAIS DA LIL CO */
+.lil-action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }
 
-/* Botões do Quiz Elevados (Juicy 🍊) */
-.quiz-btn {
-    background: #1f2833;
-    color: white;
-    border: 2px solid #45f3ff;
-    padding: 15px 25px;
-    margin: 10px 0;
-    width: 100%;
-    text-align: left;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s ease;
+.lil-btn {
+  width: 100%;
+  min-height: 70px;
+  background: #090d16;
+  border: 2px solid var(--border-blue);
+  color: #fff;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 900;
+  text-align: left;
+  padding: 14px 20px;
+  position: relative;
+  transition: all 0.2s ease;
 }
 
-.quiz-btn:hover:not(:disabled) {
-    background: #45f3ff;
-    color: black;
-    transform: translateX(5px);
-    box-shadow: 0 0 15px rgba(69, 243, 255, 0.4);
+.lil-btn:hover {
+  background: #101826;
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 15px var(--shadow-blue);
+  transform: translateY(-2px);
 }
 
-/* Estados Visuais Instantâneos */
-.quiz-btn.correct-choice {
-    background: #22c55e !important;
-    border-color: #22c55e !important;
-    color: black !important;
-    animation: popSuccess 0.3s ease;
+.lil-btn:active {
+  transform: translateY(1px);
 }
 
-.quiz-btn.wrong-choice {
-    background: #ef4444 !important;
-    border-color: #ef4444 !important;
-    color: white !important;
-    animation: shakeError 0.4s ease;
+.lil-btn-title {
+  display: block;
+  font-size: 1rem;
+  color: #fff;
+  letter-spacing: 1px;
 }
 
-/* Barra Lateral de Contactos */
-#contacts {
-    background: #141923;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
+.lil-btn-subtitle {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: normal;
+  color: var(--text-muted);
+  text-transform: none;
+  margin-top: 4px;
 }
-.contact-pill {
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: bold;
-    background: #222;
-}
-.contact-pill.unlocked { background: rgba(69, 243, 255, 0.1); color: #45f3ff; border: 1px solid #45f3ff; }
-.contact-pill.completed { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid #22c55e; }
 
-/* Notificação Toast */
-#toast-notification {
-    position: fixed;
-    top: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 16px 32px;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    z-index: 9999;
-    transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/* Indicador Técnico de seta lateral nos botões */
+.lil-btn::after {
+  content: "//";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--neon-blue);
+  font-size: 1.1rem;
+  transition: color 0.2s ease;
 }
-#toast-notification.show { top: 30px; }
-#toast-notification.success { background: #22c55e; color: black; }
-#toast-notification.error { background: #ef4444; }
 
-/* Animações Keyframes */
-@keyframes shakeError {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-8px); }
-    40%, 80% { transform: translateX(8px); }
+.lil-btn:hover::after {
+  color: var(--neon-cyan);
 }
-@keyframes popSuccess {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.03); }
-    100% { transform: scale(1); }
+
+@media (max-width: 900px) {
+  .lil-dashboard { grid-template-columns: 1fr; }
 }
+</style>
+</head>
+<body>
+
+<main class="shell">
+  
+  <div class="lil-dashboard">
+    
+    <aside class="lil-sidebar">
+      <h1 class="system-title">MEDIOTEC SENAC   <span> 2º  D   </span></h1>
+      
+      <div class="sys-stat-box">
+        <div>CITY: <b style="color: var(--neon-cyan);">RECIFE</b></div>
+        <div>HOST: <b>P.I</b></div>
+        <div>SEC_LEVEL: <b>DESAFIO 3</b></div>
+      </div>
+
+      <div class="sys-stat-box" style="border-color: var(--border-blue); margin-top: auto; margin-bottom: 30px;">
+        <div style="font-size: 0.75rem;">Como criar ferramentas digitais de rastreabilidade e comunicação transparente que eduquem o ecossistema da moda sobre o impacto ambiental dos produtos, conectando marcas, cooperativas de reciclagem e consumidores em um ciclo transparente de economia circular?</div>
+      </div>
+    </aside>
+
+    <section class="lil-main-console">
+      <div>
+        <header class="console-header">
+          <h2>DIRETRIZ DE ENTRADA / SISTEMA DE CONTROLE</h2>
+        </header>
+    
+
+      <div>
+        <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; letter-spacing: 1px;">
+          [ Selecione o ponto de acesso para iniciar ]
+        </div>
+        
+        <div class="lil-action-grid">
+          
+          <a href="GREENWASHING_MENU.html" style="text-decoration: none; display: block;">
+            <button type="button" class="lil-btn">
+              <span class="lil-btn-title">JOGO 1</span>
+              <span class="lil-btn-subtitle">GREENWASHING INC.</span>
+            </button>
+          </a>
+
+          <a href="MODAL CHAIN.html" style="text-decoration: none; display: block;">
+            <button type="button" class="lil-btn">
+              <span class="lil-btn-title">JOGO 2</span>
+              <span class="lil-btn-subtitle"> MODAL CHAIN</span>
+            </button>
+          </a>
+          <a href="CHAIN CLICK BREAKERS.html" style="text-decoration: none; display: block;">
+            <button type="button" class="lil-btn">
+              <span class="lil-btn-title">JOGO 3</span>
+              <span class="lil-btn-subtitle">ECO CLICKER</span>
+            </button>
+          </a>
+          <a href="./retalhos/">
+            <button type="button" class="lil-btn">
+                <span class="lil-btn-title">NPCS</span>
+                <span class="lil-btn-subtitle">
+                    VISUAL NOVEL + QUIZ + EXPLORAÇÃO
+                </span>
+            </button>
+        </a>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+</main>
+
+</body>
+</html>
