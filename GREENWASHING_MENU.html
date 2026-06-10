@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Confronto Final: Diogo Moreno</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="contacts"></div>
+
+    <h1 style="color: #ff4343;">⚠️ CONFLITO BOSS: Diogo Moreno</h1>
+    <p><strong>Tema:</strong> Auditoria de Greenwashing</p>
+    
+    <div id="dialogue" style="background: #222; padding: 15px; margin-bottom: 20px; border-left: 5px solid #ff4343;">
+        "Chegaste ao fim da linha. Decifra o enigma para desbloquear o acesso direto ao terminal do Minijogo."
+    </div>
+
+    <h2>Desafio de Pista Final</h2>
+    <p>Como um auditor independente identifica fraudes de marcas que praticam Greenwashing?</p>
+
+    <button onclick="answerQuiz(true, 'diogo', [], '../minigames/auditoria.html')">
+        A) Verificando relatórios auditados e certificações rastreáveis de entidades externas (como GOTS).
+    </button>
+    <button onclick="answerQuiz(false, 'diogo')">
+        B) Baseando a análise apenas em campanhas de marketing e etiquetas que usam o termo "Consciente".
+    </button>
+
+    <hr style="margin-top: 40px; opacity: 0.2;">
+    <button onclick="window.location.href='../index.html'" style="background: #ff4343; color: #fff; font-weight: bold;">
+        ↩️ Recuar para o Painel de Investigação (Principal)
+    </button>
+
+    <script src="../js/game.js"></script>
+    <script src="../js/contacts.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script>renderContacts("contacts");</script>
+</body>
+</html>
